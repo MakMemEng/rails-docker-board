@@ -1,8 +1,8 @@
-version: '3'
+version: '3.9'
 services:
   web:
     build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/app
     ports:
@@ -12,7 +12,9 @@ services:
     tty: true
     stdin_open: true
   db:
-    image: mysql:5.7
+    image: mysql:latest
+    platform: linux/x86_64 # M1の場合これ必要
+    command: --default-authentication-plugin=mysql_native_password
     volumes:
       - db-volume:/var/lib/mysql
     environment:
