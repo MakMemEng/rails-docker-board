@@ -28,6 +28,7 @@ class BoardsController < ApplicationController
   end
 
   def edit
+    @board.attributes = flash[:board] if flash[:board]
   end
 
   def update
